@@ -1,0 +1,10 @@
+{
+	"name": "chat-app",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"ui": "cd real-time-chat && npm start",
+        "express": "cd expressApp && npm start",
+        "background": "cd backgroundService && npm start"
+	}
+}
