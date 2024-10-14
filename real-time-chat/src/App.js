@@ -6,6 +6,7 @@ function App() {
 	const [ws, setWs] = useState(null);
 	const [isConnected, setIsConnected] = useState(false);
 	const [isConnecting, setIsConnecting] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		setIsConnecting(true);
@@ -22,6 +23,7 @@ function App() {
 			} else {
 				setOutput((output) => [...output, answer]);
 			}
+			setLoading(false);
 		};
 
 		ws.onopen = () => {
@@ -46,7 +48,8 @@ function App() {
 		if (isConnected) {
 			console.log('Sending message:', input);
 			ws.send(input);
-			// setInput('');
+			setLoading(true);
+			setInput('');
 		} else if (isConnecting) {
 			console.log('Waiting for the WebSocket connection to be established...');
 		} else {
@@ -63,8 +66,8 @@ function App() {
 				onChange={(e) => setInput(e.target.value)}
 				placeholder="Ask a question"
 			/>
-			<button onClick={handleSend} disabled={!isConnected}>
-				{isConnecting ? 'Connecting...' : 'Send'}
+			<button onClick={handleSend} disabled={!isConnected || loading}>
+				{isConnecting ? 'Connecting...' : loading ? 'Loading' : 'Send'}
 			</button>
 			<div id="output">
 				{output.map((msg, index) => (
