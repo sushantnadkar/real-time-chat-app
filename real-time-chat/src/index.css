@@ -11,3 +11,106 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#output {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-container {
+  width: 100%;
+  height: 100%;
+}
+
+.chat-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-header h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.chat-body {
+  padding: 20px;
+  overflow-y: auto;
+  height: calc(100% - 120px);
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 90%;
+}
+
+img {
+  width: 100%;
+}
+
+.sent {
+  background-color: #007bff;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.received {
+  background-color: #c1c1c1;
+  color: #333;
+  align-self: flex-start;
+}
+
+.message-text {
+  font-size: 16px;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #666;
+}
+
+.chat-footer {
+  background-color: #fff;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  column-gap: 10px;
+}
+
+.chat-input {
+  width: 78%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.chat-input:focus-visible {
+  border: 1px solid #ddd;
+}
+
+.chat-send-button {
+  width: 18%;
+  height: 40px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chat-send-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

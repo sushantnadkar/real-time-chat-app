@@ -19,9 +19,9 @@ function App() {
 				const img = document.createElement('img');
 				img.src = answer;
 				img.alt = 'NASA APOD';
-				setOutput((output) => [...output, <img src={answer} alt="NASA APOD" />]);
+				setOutput((output) => [...output, { type: "received", text: <img src={answer} alt="NASA APOD" />}]);
 			} else {
-				setOutput((output) => [...output, answer]);
+				setOutput((output) => [...output, { type: "received", text: answer}]);
 			}
 			setLoading(false);
 		};
@@ -48,6 +48,7 @@ function App() {
 		if (isConnected) {
 			console.log('Sending message:', input);
 			ws.send(input);
+			setOutput((output) => [...output, { type: "sent", text: input }])
 			setLoading(true);
 			setInput('');
 		} else if (isConnecting) {
@@ -58,23 +59,30 @@ function App() {
 	};
 
 	return (
-		<div>
-			<h1>Chat App</h1>
-			<input
-				type="text"
-				value={input}
-				onChange={(e) => setInput(e.target.value)}
-				placeholder="Ask a question"
-			/>
-			<button onClick={handleSend} disabled={!isConnected || loading}>
-				{isConnecting ? 'Connecting...' : loading ? 'Loading' : 'Send'}
-			</button>
-			<div id="output">
-				{output.map((msg, index) => (
-					<div key={index} className="message">
-						{msg}
-					</div>
-				))}
+		<div className="chat-container">
+			<div className="chat-header">
+				<h1>Chat App</h1>
+			</div>
+			<div className="chat-body">
+				<div id="output">
+					{output.map((msg, index) => (
+						<div key={index} className={`message ${msg.type === 'sent' ? 'sent' : 'received'}`}>
+							<span className="message-text">{msg.text}</span>
+						</div>
+					))}
+				</div>
+			</div>
+			<div className="chat-footer">
+				<input
+					type="text"
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
+					placeholder="Type a message"
+					className="chat-input"
+				/>
+				<button onClick={handleSend} disabled={!isConnected || loading} className="chat-send-button">
+					{isConnecting ? 'Connecting...' : loading ? 'Loading' : 'Send'}
+				</button>
 			</div>
 		</div>
 	);
